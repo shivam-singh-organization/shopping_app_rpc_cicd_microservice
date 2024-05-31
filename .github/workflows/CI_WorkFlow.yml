@@ -26,3 +26,15 @@ jobs:
       run: |
         npm ci
         npm test
+
+    - name: Install dependencies and run tests for Product Service
+      working-directory: ./product
+      run: |
+        npm ci
+        npm test
+
+    - name: Install dependencies and run tests for Shopping Service
+      working-directory: ./shopping
+      run: |
+        npm ci
+        npm test
