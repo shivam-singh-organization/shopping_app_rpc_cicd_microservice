@@ -1,8 +1,8 @@
 // which service it is
 describe("CustomerService", () => {
-  // SignIn function
+  // Which function
   describe("SignIn", () => {
-    // In which Scenario we are testing
+    // Which Scenario we are testing
     test("validate user inputs", () => {});
 
     test("Validate response", async () => {});
