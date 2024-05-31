@@ -1,0 +1,65 @@
+version: "3.8"
+services:
+  mongo:
+    image: mongo:latest
+    container_name: mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+
+  product:
+    build:
+      context: ./product
+    container_name: product
+    ports:
+      - "4000:4000"
+    restart: always
+    depends_on:
+      - mongo
+    volumes:
+      - ./product:/app/product
+    env_file:
+      - ./product/.env
+
+  shopping:
+    build:
+      context: ./shopping
+    container_name: shopping
+    ports:
+      - "5000:5000"
+    restart: always
+    depends_on:
+      - mongo
+    volumes:
+      - ./shopping:/app/shopping
+    env_file:
+      - ./shopping/.env
+
+  customer:
+    build:
+      context: ./customer
+    container_name: customer
+    ports:
+      - "3000:3000"
+    restart: always
+    depends_on:
+      - mongo
+    volumes:
+      - ./customer:/app/customer
+    env_file:
+      - ./customer/.env
+
+  nginx-proxy:
+    build:
+      context: ./proxy
+    container_name: nginx-proxy
+    depends_on:
+      - product
+      - shopping
+      - customer
+    ports:
+      - "80:80"
+
+volumes:
+  mongo-data:
